@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Lexend", system-ui, sans-serif;
+  }
+
+  [data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+    z-index: 9999999;
+  }
+
+  [data-title]:after {
+      display: flex;
+      padding: 8px 12px;
+      flex-direction: column;
+      align-items: flex-start;
+      align-self: stretch;
+      content: attr(data-title);
+      background-color: #101828;
+      color: #fff;
+      position: absolute;
+      top: 100%;
+      left: 30px;
+      white-space: nowrap;
+      box-shadow: 1px 1px 3px #4b4b4b;
+      opacity: 0;
+      border-radius: 8px;
+      z-index: 9999999;
+      visibility: hidden;
+  }
+
+  [data-title] {
+      position: relative;
+  }
+
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar:horizontal {
+    height: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba (155, 155, 155, 0.5);
+    border-radius: 20px;
+    border: transparent;
+    background: #949695;
+  }
+}
