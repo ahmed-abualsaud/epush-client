@@ -9,19 +9,24 @@
 	import Container from "../shared/Container.svelte"
 
 	import { getClient } from "../../api/clientApi"
-    import { getLastOrder } from "../../api/expenseApi"
-    import { setCurrentClient, setLastOrder } from "$lib/helper/store"
+    import { getLastOrder, listPaymentMethods } from "../../api/expenseApi"
+    import { listSales, getClientSendersAndConnections } from "../../api/clientApi"
+    import { setSales, setCurrentClient, setLastOrder, setPaymentMethods } from "$lib/helper/store"
 
 	let client
     let lastOrder
 
     const loadClient = async () => {
         client = await getClient()
-		// client.balance = 0
+		client.connections = await getClientSendersAndConnections()
+
         lastOrder = await getLastOrder()
         lastOrder.number_of_messages = Math.floor(client.balance / lastOrder.pricelist.price)
+		// client.balance = 0
         setCurrentClient(client)
         setLastOrder(lastOrder)
+		setSales((await listSales()).map(sls => sls.name))
+		setPaymentMethods((await listPaymentMethods()).map(payMtd => payMtd.name))
     }
 
     $: loadClient()

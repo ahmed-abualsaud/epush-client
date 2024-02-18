@@ -3,21 +3,24 @@
 	import Badge from "../shared/Badge.svelte"
 	import Table from "../shared/table/Table.svelte"
 	import TableContainer from "../shared/table/TableContainer.svelte"
-    import AddMessageButton from "./AddMessage/AddMessageButton.svelte"
+	import ViewSentMessage from "./Report/ViewSentMessage.svelte"
+    import AddMessageButton from "./Report/AddMessageButton.svelte"
 
     import { onMount } from "svelte"
 	import { empty } from "$lib/helper/utils"
+    import { showModal } from "$lib/helper/modal"
     import { listMessageLanguages } from "../../api/messageApi"
     import { addSlugToCurrentRouteDisplay } from "$lib/router/router"
     import { currentClient, clientSenderNames } from "$lib/helper/store"
     import { readableTimestamp, getDatetimeString } from "$lib/helper/dateTime"
 
 	import { 
-        getClientMessages,
         getBulkMessages,
+        getDraftMessages,
+        getClientMessages,
         getCustomMessages,
-        getCustomWithParametersMessages,
-        getGroupSMSMessages
+        getGroupSMSMessages,
+        getCustomWithParametersMessages
     } from "../../api/messageApi"
 
 
@@ -125,7 +128,7 @@
     let index = 0
     const renderSenderName = (sender, idx = -1) => {
         index = idx == -1 ? index + 1 : idx
-        let color = index%5 == 0 ? "rose" : (index%4 == 1 ? "green" :  (index%5 == 2 ? "blue" : "purple"))
+        let color = index%5 == 0 ? "rose" : (index%4 == 1 ? "green" :  (index%5 == 2 ? "blue" : (index%5 == 3 ? "purple" : "indigo")))
         return {
             component: Badge,
             props: {
@@ -160,19 +163,23 @@
             }
         }
     }
+
+    const onPreviewMessage = (message) => {
+        showModal(ViewSentMessage, {message})
+    }
 </script>
 
 <div class="flex flex-col items-start self-stretch flex-1 gap-8 px-6">
     <div class="flex flex-col items-start self-stretch gap-5 w-full">
 
-        <div class="flex items-center self-stretch gap-4">
+        <div class="flex items-center self-stretch gap-4 mb-4">
             <div class="flex flex-col items-start flex-1 gap-1">
                 <span class="self-stretch text-gray-900 text-3xl leading-[38px] font-semibold">Reports</span>
-                <span class="self-stretch text-gray-600">Mange and view your sent messages</span>
+                <span class="self-stretch text-gray-600">Manage and view your sent messages</span>
             </div>
         </div>
 
-        <div bind:this={messageSelector} class="flex items-center self-stretch gap-8 border-b border-b-gray-200">
+        <div bind:this={messageSelector} class="flex items-center self-stretch gap-8 border-b">
             <button id="all" on:click={() => onClickHandler("all")} class="flex justify-center items-center gap-2 p-3 border-b border-b-primary-700 bg-primary-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M5.83333 7.08333H10M5.83333 10H12.5M8.06979 15H13.5C14.9001 15 15.6002 15 16.135 14.7275C16.6054 14.4878 16.9878 14.1054 17.2275 13.635C17.5 13.1002 17.5 12.4001 17.5 11V6.5C17.5 5.09987 17.5 4.3998 17.2275 3.86502C16.9878 3.39462 16.6054 3.01217 16.135 2.77248C15.6002 2.5 14.9001 2.5 13.5 2.5H6.5C5.09987 2.5 4.3998 2.5 3.86502 2.77248C3.39462 3.01217 3.01217 3.39462 2.77248 3.86502C2.5 4.3998 2.5 5.09987 2.5 6.5V16.9463C2.5 17.3903 2.5 17.6123 2.59102 17.7263C2.67019 17.8255 2.79022 17.8832 2.91712 17.8831C3.06302 17.8829 3.23639 17.7442 3.58313 17.4668L5.57101 15.8765C5.9771 15.5517 6.18014 15.3892 6.40624 15.2737C6.60683 15.1712 6.82036 15.0963 7.04101 15.051C7.28972 15 7.54975 15 8.06979 15Z" stroke="#527615" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -212,6 +219,7 @@
         </div>
     </div>
 
+    {#if shownTable != "drafts"}
     <div class="flex flex-col lg:flex-row items-center self-stretch gap-6">
         <Card title="Total Messages" >
             <div slot="title-icon" class="flex justify-center items-center p-3 w-12 h-12 rounded-[28px] border-8 border-primary-50 bg-primary-100">
@@ -265,38 +273,47 @@
             </div>
         </Card>
     </div>
+    {/if}
+
 
     <TableContainer>
     {#if shownTable === "all"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} tableName="Messages" description="Search and find your messages report." defaultCriteria={"approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getClientMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getClientMessages}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>
         </Table>
     {/if}
     {#if shownTable === "bulk-messages"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} tableName="Messages" description="Search and find your messages report." defaultCriteria={"approved = true AND send_type = 'Bulk Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getBulkMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Bulk Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getBulkMessages}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>
         </Table>
     {/if}
     {#if shownTable === "custom-messages"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} tableName="Messages" description="Search and find your messages report." defaultCriteria={"approved = true AND send_type = 'Custom Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomMessages}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>
         </Table>
     {/if}
     {#if shownTable === "custom-with-parameters"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} tableName="Messages" description="Search and find your messages report." defaultCriteria={"approved = true AND send_type = 'Custom With Parameters' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomWithParametersMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom With Parameters' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomWithParametersMessages}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>
         </Table>
     {/if}
     {#if shownTable === "group-sms"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} tableName="Messages" description="Search and find your messages report." defaultCriteria={"approved = true AND send_type = 'Group SMS' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getGroupSMSMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Group SMS' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getGroupSMSMessages}>
+            <div slot="no-data">
+                <AddMessageButton />
+            </div>
+        </Table>
+    {/if}
+    {#if shownTable === "drafts"}
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = true AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getDraftMessages}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>

@@ -97,12 +97,10 @@
     }
 </script>
 
-<div class="flex flex-col items-start flex-1 self-stretch gap-4 overflow-y-auto pe-2 bg-gray-50">
+<div class="flex flex-col items-start flex-1 self-stretch gap-4 max-h-[222px] overflow-y-auto pt-2 px-2 bg-gray-50 border-y">
 {#each inputs as input, index}
     <div class="flex items-start self-stretch {index == 0 ? (inputs.length == 1 ? "gap-4" : "") : "gap-4"}">
-        <div
-            class="relative flex items-start self-stretch flex-1 rounded-lg bg-white shadow-sm {clazz}"
-        >
+        <div class="relative flex items-start self-stretch flex-1 rounded-lg bg-white shadow-sm {clazz}">
             <div class="relative w-14">
                 <button on:click={() => togglePrefixes(index)} class="flex flex-col items-center justify-center py-1 px-1.5 border-y border-l border-l-gray-300 border-y-gray-300 rounded-tl-lg rounded-bl-lg w-full">
                     <span class="text-gray-600 text-center">{input.prefix}</span>

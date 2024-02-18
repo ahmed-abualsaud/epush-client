@@ -19,7 +19,7 @@
     }
 </script>
 
-<Modal name="add-balance">
+<Modal>
     <div class="flex flex-col items-center self-stretch rounded-xl bg-white shadow-xl w-[811px] overflow-hidden">
         <div class="flex flex-col items-center self-stretch bg-white mb-5">
             <div class="flex flex-col items-start self-stretch gap-4 pt-6 px-6 bg-white">

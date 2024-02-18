@@ -11,6 +11,7 @@
 
     export let total = 0
     export let filterdData
+    export let tableTitle = ""
     export let tableName = "Table"
     export let description  = "description"
     export let columnsMap = {no_data: "no_data"}
@@ -19,8 +20,14 @@
     export let paginatedSearchFunction = null
     export let useSearch = false
     export let showFilter = true
+    export let showSearch = true
+    export let showDateSelector = true
+    export let showSearchExport = true
     export let defaultCriteria = ""
+    export let searchClass = ""
     export let columnsFilters = []
+    export let searchColumns = []
+    export let useCustomSearch = false
 
     let toggleFilter = false
     let showCalendar = false
@@ -34,7 +41,7 @@
     let defaultStartMonth = (currentDate.getMonth() + 11)%12
     let defaultStartYear = defaultStartMonth == 11 ? currentDate.getFullYear() - 1 : currentDate.getFullYear()
 
-    const exportMessages = async () => {
+    const exportData = async () => {
         if(! empty(dataToExport)) {
             let cols = Object.values(columnsMap)
             exportExcel(cols, dataToExport.map(obj => cols.map(key => key == 'language' ? obj[key].name : obj[key])))
@@ -62,12 +69,14 @@
 </script>
 
 <div class="flex flex-col items-start self-stretch gap-5 bg-white rounded-t-xl">
-    <div class="flex justify-between items-start self-stretch gap-4 pt-5 px-6">
-        <TableTitle {tableName} {description} {total} />
-        {#if showFilter}
-        <TableSearch {tableName} {mapFunction} {searchFunction} {defaultCriteria} {columnsMap} bind:total={total} bind:filterdData={filterdData} bind:showFilter={toggleFilter} bind:useSearch={useSearch} bind:paginatedSearchFunction={paginatedSearchFunction} />            
-        {/if}
+    <div class="flex justify-between items-center self-stretch gap-4 pt-5 px-6 border-b pb-5">
+        <TableTitle {tableTitle} {description} {total} />
 
+        {#if showSearch}
+        <TableSearch columns={searchColumns} clazz={searchClass} showExport={showSearchExport} {tableName} {mapFunction} {searchFunction} {useCustomSearch} {defaultCriteria} {columnsMap} {showFilter} bind:total={total} bind:filterdData={filterdData} bind:toggleFilter={toggleFilter} bind:useSearch={useSearch} bind:paginatedSearchFunction={paginatedSearchFunction} />            
+        {/if}
+    
+        {#if showDateSelector}
         <div class="flex items-center gap-3">
             <div class="relative flex flex-col items-end gap-2">
                 <button on:click={() => showCalendar = !showCalendar} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-lg border border-gray-300 bg-white shadow-sm hover:bg-primary-50">
@@ -78,20 +87,17 @@
                 </button>
                <CalendarRange {defaultStartDay} {defaultStartMonth} {defaultStartYear} clazz="absolute top-11" onApplyCalendar={applyCalendar} bind:showCalendar={showCalendar} bind:startDate={startExportDate} bind:endDate={endExportDate} />
             </div>
-            <button on:click={exportMessages} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-lg border border-gray-300 bg-white shadow-sm hover:bg-primary-50">
+            <button on:click={exportData} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-lg border border-gray-300 bg-white shadow-sm hover:bg-primary-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M17.5 17.5H2.5M15 9.16667L10 14.1667M10 14.1667L5 9.16667M10 14.1667V2.5" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span class="text-gray-700 text-sm font-semibold">Export</span>
             </button>
         </div>
+        {/if}
     </div>
 
-    <svg class="flex-1 w-full" xmlns="http://www.w3.org/2000/svg" height="1" viewBox="0 0 1112 1" fill="none">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M1112 1H0V0H1112V1Z" fill="#EAECF0"/>
-    </svg>
-
-    {#if toggleFilter}
+    {#if showFilter && toggleFilter}
     <TableFilter {tableName} {columnsMap} {columnsFilters} {mapFunction} {defaultCriteria} filterFunction={searchFunction} bind:total={total} bind:filterdData={filterdData} bind:useFilter={useSearch} bind:paginatedfilterFunction={paginatedSearchFunction}/>
     {/if}
 </div>

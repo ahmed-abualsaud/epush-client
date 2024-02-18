@@ -20,6 +20,9 @@ export default {
         gray: {25: '#FCFCFD'},
         blue: {
           light: {50: '#F0F9FF', 600: '#0086C9', 700: '#026AA2'}
+        },
+        orange: {
+          dark: {50: '#FFF4ED', 500: '#EF6820', 700: '#B93815'}
         }
         // ... add more colors as you like
       },

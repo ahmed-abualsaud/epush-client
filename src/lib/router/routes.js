@@ -6,8 +6,11 @@ import ResetPassword from "../../components/auth/ResetPassword.svelte"
 import ForgotPassword from "../../components/auth/ForgotPassword.svelte"
 
 import Home from "../../components/client/Home.svelte"
+import Groups from "../../components/client/Groups.svelte"
+import Senders from "../../components/client/Senders.svelte"
 import Reports from "../../components/client/Reports.svelte"
-import SavedGroups from "../../components/client/Group/SavedGroups.svelte"
+import SMSTemplates from "../../components/client/SMSTemplates.svelte"
+import BillingHistory from "../../components/client/BillingHistory.svelte"
 import ScheduledMessages from "../../components/client/ScheduledMessages.svelte"
 
 
@@ -20,7 +23,10 @@ export const routes = [
 	{ path: 'forgot-password', component: ForgotPassword },
 
 	{ path: 'home', component: Home },
+	{ path: 'groups', component: Groups},
+	{ path: 'senders', component: Senders },
 	{ path: 'reports', component: Reports },
-	{ path: "groups", component: SavedGroups},
+	{ path: 'sms-templates', component: SMSTemplates},
+	{ path: 'billings-history', component: BillingHistory },
 	{ path: 'scheduled-messages', component: ScheduledMessages}
 ]

@@ -35,12 +35,12 @@ export const readableToTimestamp = (readableTimestamp) =>
 export const isReadabelTimestamp = (str) => 
 {
   var formats = [
-    "MM/DD/YYYY",
+    "DD/MM/YYYY",
     "MM/YYYY",
-    "MM/DD",
+    "DD/MM",
     "HH:mm:ss",
     "HH:mm",
-    "MM/DD/YYYY - HH:mm:ss"
+    "DD/MM/YYYY - HH:mm:ss"
   ];
 
   for (var i = 0; i < formats.length; i++) {

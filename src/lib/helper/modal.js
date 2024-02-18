@@ -1,11 +1,16 @@
-import { writable } from 'svelte/store'
+let modal
 
-export const visibleModal = writable("")
+export const showModal = (component, props = {}) => {
 
-export const showModal = (modalName) => {
-    visibleModal.set(modalName)
+    if (modal) {
+        modal.$destroy()
+    }
+
+    modal = new component({target: document.body, props})
 }
 
 export const hideModal = () => {
-    visibleModal.set("")
+    if (modal) {
+        modal.$destroy()
+    }
 }

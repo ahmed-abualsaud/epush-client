@@ -70,7 +70,7 @@ export const countSubstringOccurrences = (string, substring) => {
   return matches ? matches.length : 0
 }
 
-export function findSimilarWords(text, blacklist, percentage = 100) {
+export const findSimilarWords = (text, blacklist, percentage = 100) => {
 
   const result = []
   const minWeight = (percentage / 100)
@@ -124,7 +124,7 @@ export function findSimilarWords(text, blacklist, percentage = 100) {
   return result
 }
 
-function splitTextIntoChunks(text, n) {
+const splitTextIntoChunks = (text, n) => {
   const words = text.split(/\s+/)
   const chunks = []
 
@@ -136,7 +136,7 @@ function splitTextIntoChunks(text, n) {
   return chunks
 }
 
-export function diceCoefficient(value, other) {
+export const diceCoefficient = (value, other) => {
 	const left = toPairs(value)
 	const right = toPairs(other)
 	let index = -1
@@ -162,25 +162,21 @@ export function diceCoefficient(value, other) {
 }
   
 
-function toPairs(value) {
+const toPairs = (value) => {
 	if (Array.isArray(value)) {
 	  return value.map((bigram) => normalize(bigram))
 	}
   
 	const normal = normalize(value)
-	return normal.length === 1 ? [normal] : bigram(normal)
+    return normal.length === 1 ? [normal] : bigram(normal)
   }
 
   function normalize(value) {
-	return String(value).toLowerCase()
-  }
+    return String(value).toLowerCase()
+}
 
 
-export const bigram = nGram(2)
-export const trigram = nGram(3)
-
-
-export function nGram(n) {
+export const nGram = (n) => {
   if (
     typeof n !== 'number' ||
     Number.isNaN(n) ||
@@ -212,4 +208,16 @@ export function nGram(n) {
 
     return nGrams
   }
+}
+
+export const bigram = nGram(2)
+export const trigram = nGram(3)
+
+export const isValidJSON = (str) => {
+	try {
+		JSON.parse(str);
+		return true;
+	} catch (e) {
+		return false;
+	}
 }

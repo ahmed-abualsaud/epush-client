@@ -87,7 +87,7 @@
         }
 
         criteria = criteria.slice(0, -5)
-        criteria = (empty(defaultCriteria) ? "" : defaultCriteria + " AND ") + criteria
+        criteria = empty(defaultCriteria) ? criteria : (empty(criteria) ? defaultCriteria : defaultCriteria + " AND " + criteria)
 
         useFilter = true
         if (filterFunction) {

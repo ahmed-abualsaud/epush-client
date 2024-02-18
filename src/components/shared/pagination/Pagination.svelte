@@ -13,7 +13,7 @@
 
 <div class="flex flex-col items-start w-full rounded-b-xl">
     <Paginator bind:data={data} {take} {mapFunction} {onPageClick} {paginatedSearchFunction} {useSearch}/>
-    <div class="flex justify-between items-center w-full py-3 px-5 bg-gray-50 rounded-b-xl">
+    <div class="flex justify-between items-center w-full py-3 px-6 bg-gray-50 rounded-b-xl">
         <PageInfo {take} total={data?.total} />
         <PageCount bind:perPage={take} />
     </div>

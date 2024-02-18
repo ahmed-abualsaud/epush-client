@@ -10,30 +10,66 @@
 	import TableExportHeader from "./TableExportHeader.svelte";
 
 
-    export let columns = []
+    export let columns = [] | {}
+    export let afterColumns = []
+    export let searchColumns = []
+    export let searchFunction = search
     export let mapFunction = null
     export let fetchFunction = null
     export let hidePaginator = false
-    export let hideFilter = false
+    export let showHeader = true
+    export let showFilter = true
+    export let showSearch = true
+    export let showDateSelector = true
+    export let showSearchExport = false
+    export let tableTitle = ""
     export let tableName = "Table"
     export let description = "Description"
     export let noDataMessage =  "You don’t have any data for now!"
     export let noDataDescription = "Table data will appear here."
     export let defaultCriteria = ""
+    export let searchClass = ""
+    export let columnClass = "w-52"
+    export let contentClass = "auto"
     export let allowBulkActions = true
     export let columnsFilters = {}
+    export let useIndex = true
+    export let onEdit = null
+    export let onDelete = null
+    export let onPreview = null
+    export let onDownload = null
+    export let onCustomAction = null
+    export let customActionText = ""
+    export let showEditText = true
+    export let showDeleteText = true
+    export let showPreviewText = true
+    export let showDownloadText = true
+    export let onBulkEdit = null
+    export let onBulkDelete = null
+    export let showBulkDownload = true
+    export let columnsRenders = {}
+    export let noColumnsTruncate = []
 
     let rows = []
-    let columnsMap = {}
     let selectedRows = []
     let noData = false
     let useSearch = false
+    let useCustomSearch = false
     let paginatedSearchFunction = null
+    let columnsMap = columns
+
+    columns = Array.isArray(columns) ? columns :  Object.keys(columns)
+    tableTitle = empty(tableTitle) ? tableName : tableTitle
+
+    if(! empty(searchFunction) && searchFunction != search) {
+        useCustomSearch = true
+    }
 
     onMount(async () => {
-        columnsMap = columns
-        columns = Array.isArray(columns) ? columns :  Object.keys(columns)
-        columns = columns.includes('#') ? columns : ['#', ...columns]
+        if (useIndex) {
+            columns = columns.includes('#') ? columns : ['#', ...columns]
+        }
+
         if (fetchFunction) {
             let data = await fetchFunction(1)
 
@@ -54,21 +90,28 @@
 </script>
 
 {#if noData}
-    <TableHeader {columnsFilters} {mapFunction} {defaultCriteria} {tableName} {description} {columnsMap} searchFunction={search} bind:filterdData={rows} bind:useSearch={useSearch} bind:paginatedSearchFunction={paginatedSearchFunction} />
-    <NoData message={noDataMessage} description={noDataDescription}>
+    {#if showHeader}
+    <TableHeader {searchColumns} {searchClass} {showFilter} {showSearch} {showSearchExport} {showDateSelector} {columnsFilters} {mapFunction} {defaultCriteria} {tableName} {tableTitle} {description} {columnsMap} {searchFunction} {useCustomSearch} bind:filterdData={rows} bind:useSearch={useSearch} bind:paginatedSearchFunction={paginatedSearchFunction} />
+    {/if}
+    <NoData message={noDataMessage} description={noDataDescription} clazz="border-none rounded-xl py-[55px]">
         <slot name="no-data" />
     </NoData>
 {:else}
-    {#if ! hideFilter && empty(selectedRows)}
-    <TableHeader {columnsFilters} {mapFunction} {defaultCriteria} {tableName} {description} {columnsMap} searchFunction={search} bind:filterdData={rows} bind:useSearch={useSearch} bind:paginatedSearchFunction={paginatedSearchFunction} />
+    {#if showHeader && empty(selectedRows)}
+    <TableHeader {searchColumns} {searchClass} {showFilter} {showSearch} {showSearchExport} {showDateSelector} {columnsFilters} {mapFunction} {defaultCriteria} {tableName} {tableTitle} {description} {columnsMap} {searchFunction} {useCustomSearch} bind:filterdData={rows} bind:useSearch={useSearch} bind:paginatedSearchFunction={paginatedSearchFunction} />
+    <slot name="header-extension" />
     {/if}
 
     {#if ! empty(selectedRows)}
-        <TableExportHeader {tableName} rows={selectedRows} {columnsMap} />
+        <TableExportHeader {showBulkDownload} {tableName} rows={selectedRows} {columnsMap} {onBulkEdit} {onBulkDelete} />
     {/if}
 
     <div class="flex items-start self-stretch bg-white rounded-b-xl overflow-y-hidden overflow-x-auto">
-        <TableColumns {columns} {rows} {allowBulkActions} bind:selectedRows={selectedRows} />
+        <TableColumns {contentClass} clazz={columnClass} {columns} {afterColumns} {noColumnsTruncate} {rows} {allowBulkActions} bind:selectedRows={selectedRows} {onPreview} {onEdit} {showPreviewText} {showEditText} {onDelete} {showDeleteText} {onCustomAction} {customActionText} {onDownload} {showDownloadText} {columnsRenders}>
+            <div slot="after-column" let:row={row}>
+                <slot name="after-column" {row}/>
+            </div>
+        </TableColumns>
     </div>
 
     {#if ! hidePaginator && typeof rows == "object" && rows.hasOwnProperty("data")}
