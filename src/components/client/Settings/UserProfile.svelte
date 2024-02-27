@@ -4,13 +4,15 @@
 	import UserSuccessModal from "./UserSuccessModal.svelte"
 	import DeleteAvatarModal from "./DeleteAvatarModal.svelte"
 
+	import { onMount } from "svelte"
     import { empty } from "$lib/helper/utils"
     import { navigate } from "$lib/router/router"
     import { showModal } from "$lib/helper/modal"
     import { infoAlert } from "$lib/helper/alert"
     import { currentClient } from "$lib/helper/store"
-	import { updateUser } from "../../../api/clientApi"
     import { validateEmail } from "$lib/helper/strUtils"
+    import { setcurrentRouteDisplay } from "$lib/router/router"
+	import { getClientSenders, updateUser } from "../../../api/clientApi"
 
 
     let firstName = ""
@@ -24,6 +26,12 @@
     let showErrorMessages = false
     let defaultAvatar = "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
     let avatarPreview = empty($currentClient?.avatar) ? defaultAvatar : $currentClient.avatar
+
+    let clientSenders = []
+
+    onMount(async () => {
+        clientSenders = await getClientSenders()
+    })
 
     const validateEmailAddress = () => {
         showErrorMessages = false
@@ -144,7 +152,7 @@
 
         <div class=" h-[1px] self-stretch w-full bg-gray-200"></div>
 
-        <div class="flex items-start self-stretch gap-8 w-2/3">
+        <!-- <div class="flex items-start self-stretch gap-8 w-2/3">
             <div class="flex flex-col items-start w-1/3">
                 <span class="self-stretch text-gray-700 text-sm font-medium">Full Name</span>
                 <span class="self-stretch text-gray-600 text-sm">Your first and last name</span>
@@ -157,9 +165,9 @@
                     <input bind:value={lastName} class="outline-none w-full" placeholder={$currentClient?.last_name ?? "Enter Your Last Name"} />
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class=" h-[1px] self-stretch w-full bg-gray-200"></div>
+        <!-- <div class=" h-[1px] self-stretch w-full bg-gray-200"></div>
 
         <div class="flex items-center self-stretch gap-8 w-2/3">
             <div class="flex flex-col items-start w-1/3">
@@ -173,9 +181,9 @@
                 </div>
                 <input bind:value={username} placeholder={$currentClient?.username ?? "Enter Your Username"} class="flex items-center self-stretch flex-1 gap-2 py-2 px-3 border border-gray-300 rounded-tr-lg rounded-br-lg outline-none"/>
             </div>
-        </div>
+        </div> -->
 
-        <div class=" h-[1px] self-stretch w-full bg-gray-200"></div>
+        <!-- <div class=" h-[1px] self-stretch w-full bg-gray-200"></div>
 
         <div class="flex items-start self-stretch gap-8 w-2/3">
             <div class="flex flex-col items-start w-1/3">
@@ -195,9 +203,9 @@
                     <span class=" text-error-700 text-sm">Please enter a valid email</span>
                 {/if}
             </div>
-        </div>
+        </div> -->
 
-        <div class=" h-[1px] self-stretch w-full bg-gray-200"></div>
+        <!-- <div class=" h-[1px] self-stretch w-full bg-gray-200"></div>
 
         <div class="flex items-start self-stretch gap-8 w-2/3">
             <div class="flex flex-col items-start w-1/3">
@@ -212,9 +220,37 @@
                 </div>
                 <input bind:value={phone} on:keydown={validatePhone} placeholder={$currentClient?.phone ?? "Enter Your Phone Number"} class="flex items-center self-stretch flex-1 gap-2 py-2 px-3 border border-gray-300 rounded-tr-lg rounded-br-lg outline-none"/>
             </div>
+        </div> -->
+
+        <div class="flex flex-col items-start self-stretch flex-1 gap-6 w-2/3">
+            <div class="flex items-center justify-between self-stretch flex-1 gap-8">
+                <div class="flex flex-col items-start w-1/3">
+                    <span class="self-stretch text-gray-700 text-sm font-medium">Legal Documents</span>
+                    <span class="self-stretch text-gray-600 text-sm">Your senders status based on your documents</span>
+                </div>
+                <button on:click={async () => await setcurrentRouteDisplay("Documents")} class="flex justify-center items-center gap-2">
+                    <span class=" text-primary-700 text-sm font-semibold text-nowrap whitespace-nowrap">View Documents</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4.1665 9.99935H15.8332M15.8332 9.99935L9.99984 4.16602M15.8332 9.99935L9.99984 15.8327" stroke="#527615" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex items-center flex-wrap self-stretch flex-1 gap-2">
+                {#each clientSenders as sender}
+                    {#if sender.approved}
+                    <div class="flex py-1 px-3 items-center rounded-2xl bg-success-50 mix-blend-multiply">
+                        <span class=" text-success-700 text-center text-sm font-medium">{sender.name}: Verfied</span>
+                    </div>
+                    {:else}
+                    <div class="flex py-1 px-3 items-center rounded-2xl bg-error-50 mix-blend-multiply">
+                        <span class=" text-error-700 text-center text-sm font-medium">{sender.name}: Not Verified</span>
+                    </div>
+                    {/if}
+                {/each}
+            </div>
         </div>
 
-        <div class="flex justify-end items-center self-stretch flex-1 gap-3 w-2/3">
+        <!-- <div class="flex justify-end items-center self-stretch flex-1 gap-3 w-2/3">
             <button on:click={cancel} class="flex justify-center items-center gap-2 py-2.5 px-[18px] rounded-lg border border-gray-300 bg-white shadow-sm">
                 <span class="text-gray-700 font-semibold">Cancel</span>
             </button>
@@ -224,7 +260,7 @@
                 class="flex justify-center items-center gap-2 py-2.5 px-[18px] rounded-lg border border-primary-600 bg-primary-600 shadow-sm {(empty(firstName) && empty(lastName) && empty(email) && empty(phone) && empty(username)) ? "opacity-40" : "opacity-100"}">
                 <span class="text-white font-semibold">Save Changes</span>
             </button>
-        </div>
+        </div> -->
     </div>
 </div>
 

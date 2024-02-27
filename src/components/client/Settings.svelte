@@ -60,12 +60,12 @@
                 </svg>
                 <span class="text-primary-700">User Profile</span>
             </button>
-            <button id="company-profile" on:click={() => onClickHandler("company-profile")} class="flex justify-center items-center gap-2 p-3">
+            <!-- <button id="company-profile" on:click={() => onClickHandler("company-profile")} class="flex justify-center items-center gap-2 p-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M6.24984 5.83333H8.5415M6.24984 9.16667H8.5415M6.24984 12.5H8.5415M11.4582 5.83333H13.7498M11.4582 9.16667H13.7498M11.4582 12.5H13.7498M16.6665 17.5V5.16667C16.6665 4.23325 16.6665 3.76654 16.4848 3.41002C16.3251 3.09641 16.0701 2.84144 15.7565 2.68166C15.4 2.5 14.9333 2.5 13.9998 2.5H5.99984C5.06642 2.5 4.59971 2.5 4.24319 2.68166C3.92958 2.84144 3.67462 3.09641 3.51483 3.41002C3.33317 3.76654 3.33317 4.23325 3.33317 5.16667V17.5M18.3332 17.5H1.6665" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span class="text-gray-500">Company Profile</span>
-            </button>
+            </button> -->
             <button id="change-password" on:click={() => onClickHandler("change-password")} class="flex justify-center items-center gap-2 p-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M14.1668 8.33333V6.66667C14.1668 4.36548 12.3013 2.5 10.0002 2.5C7.69898 2.5 5.8335 4.36548 5.8335 6.66667V8.33333M10.0002 12.0833V13.75M7.3335 17.5H12.6668C14.067 17.5 14.767 17.5 15.3018 17.2275C15.7722 16.9878 16.1547 16.6054 16.3943 16.135C16.6668 15.6002 16.6668 14.9001 16.6668 13.5V12.3333C16.6668 10.9332 16.6668 10.2331 16.3943 9.69836C16.1547 9.22795 15.7722 8.8455 15.3018 8.60582C14.767 8.33333 14.067 8.33333 12.6668 8.33333H7.3335C5.93336 8.33333 5.2333 8.33333 4.69852 8.60582C4.22811 8.8455 3.84566 9.22795 3.60598 9.69836C3.3335 10.2331 3.3335 10.9332 3.3335 12.3333V13.5C3.3335 14.9001 3.3335 15.6002 3.60598 16.135C3.84566 16.6054 4.22811 16.9878 4.69852 17.2275C5.2333 17.5 5.93336 17.5 7.3335 17.5Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -79,9 +79,9 @@
         <UserProfile />
     {/if}
 
-    {#if shownForm == "company-profile"}
+    <!-- {#if shownForm == "company-profile"}
         <CompanyProfile />
-    {/if}
+    {/if} -->
 
     {#if shownForm == "change-password"}
         <ChangePassword />

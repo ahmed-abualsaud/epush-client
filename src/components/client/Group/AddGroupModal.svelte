@@ -106,10 +106,10 @@
 
         <div class="flex flex-col items-start self-stretch flex-1 gap-5 px-6">
             <div class="flex items-start self-stretch gap-4 border-b">
-                <button on:click={() => setUploadMethod("extended-form")} class="flex justify-center items-center gap-2 p-3 {uploadMethod == "extended-form" && "border-b-2 border-b-primary-700 bg-primary-50"}">
+                <!-- <button on:click={() => setUploadMethod("extended-form")} class="flex justify-center items-center gap-2 p-3 {uploadMethod == "extended-form" && "border-b-2 border-b-primary-700 bg-primary-50"}">
                     <i class="fa-regular fa-arrow-down-big-small {uploadMethod == "extended-form" ? "text-[#527615]" : "text-[#667085]"}"></i>
                     <span class="{uploadMethod == "extended-form" ? "text-primary-700" : "text-gray-500"} text-sm font-medium">Extended Form</span>
-                </button>
+                </button> -->
 
                 <button on:click={() => setUploadMethod("bulk-numbers")} class="flex justify-center items-center gap-2 p-3 {uploadMethod == "bulk-numbers" && "border-b-2 border-b-primary-700 bg-primary-50"}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">

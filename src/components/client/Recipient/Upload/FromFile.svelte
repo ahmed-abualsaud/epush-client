@@ -162,7 +162,7 @@
             </div>
             <span class="text-gray-700 text-sm">Choose your numbers file and upload it here</span>
         </div>
-        <button class="flex justify-center items-center gap-2 py-2 px-3.5 rounded-lg border border-gray-300 bg-white shadow-sm">
+        <!-- <button class="flex justify-center items-center gap-2 py-2 px-3.5 rounded-lg border border-gray-300 bg-white shadow-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                 <path d="M9.99984 18.8332C14.6022 18.8332 18.3332 15.1022 18.3332 10.4998C18.3332 5.89746 14.6022 2.1665 9.99984 2.1665C5.39746 2.1665 1.6665 5.89746 1.6665 10.4998C1.6665 15.1022 5.39746 18.8332 9.99984 18.8332Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M7.9165 7.97095C7.9165 7.57321 7.9165 7.37434 7.99962 7.26332C8.07206 7.16657 8.18293 7.10603 8.30349 7.09742C8.44182 7.08754 8.60911 7.19508 8.94368 7.41016L12.8775 9.93905C13.1678 10.1257 13.313 10.219 13.3631 10.3377C13.4069 10.4413 13.4069 10.5583 13.3631 10.662C13.313 10.7807 13.1678 10.874 12.8775 11.0606L8.94368 13.5895C8.60911 13.8046 8.44182 13.9121 8.30349 13.9023C8.18293 13.8936 8.07206 13.8331 7.99962 13.7364C7.9165 13.6253 7.9165 13.4265 7.9165 13.0287V7.97095Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -174,7 +174,7 @@
                 <path d="M11.6668 2.39111V5.83323C11.6668 6.29994 11.6668 6.5333 11.7577 6.71156C11.8376 6.86836 11.965 6.99584 12.1218 7.07574C12.3001 7.16656 12.5335 7.16656 13.0002 7.16656H16.4423M7.50016 12.9998L10.0002 15.4998M10.0002 15.4998L12.5002 12.9998M10.0002 15.4998L10.0002 10.4998M11.6668 2.1665H7.3335C5.93336 2.1665 5.2333 2.1665 4.69852 2.43899C4.22811 2.67867 3.84566 3.06112 3.60598 3.53153C3.3335 4.06631 3.3335 4.76637 3.3335 6.1665V14.8332C3.3335 16.2333 3.3335 16.9334 3.60598 17.4681C3.84566 17.9386 4.22811 18.321 4.69852 18.5607C5.2333 18.8332 5.93336 18.8332 7.3335 18.8332H12.6668C14.067 18.8332 14.767 18.8332 15.3018 18.5607C15.7722 18.321 16.1547 17.9386 16.3943 17.4681C16.6668 16.9334 16.6668 16.2333 16.6668 14.8332V7.1665L11.6668 2.1665Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="text-gray-700 text-sm font-semibold text-nowrap whitespace-nowrap">Download Sample</span>
-        </button>
+        </button> -->
     </div>
     {#if loadInProgress}
     <div class="relative flex items-start self-stretch gap-1 p-4 rounded-xl border {loadError ? "border-error-300 bg-error-25" : (loadComplete ? "border-primary-600 bg-white" : "border-gray-200 bg-white")}">
