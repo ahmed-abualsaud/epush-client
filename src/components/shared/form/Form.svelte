@@ -2,6 +2,7 @@
 	import { empty } from "$lib/helper/utils";
     import { validateElementValue, setValidationErrors } from "$lib/helper/error"
 
+    export let id
     export let onSubmit
     export let submitText
 
@@ -28,7 +29,7 @@
     }
 </script>
 
-<form bind:this={form} class="flex flex-col items-start gap-6 self-stretch" method="POST" action="?/signin" on:submit|preventDefault={validateAndSubmit}>
+<form {id} bind:this={form} class="flex flex-col items-start gap-6 self-stretch" method="POST" action="?/signin" on:submit|preventDefault={validateAndSubmit}>
     <slot />
 
     <button type="submit" class="flex justify-center items-center gap-2 self-stretch py-[10px] px-[18px] border rounded-lg border-primary-600 bg-primary-600 text-white text-base font-semibold [box-shadow:0px_1px_2px_0px_rgba(16,_24,_40,_0.05)]">

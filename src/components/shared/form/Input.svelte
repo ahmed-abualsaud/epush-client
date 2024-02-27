@@ -11,6 +11,7 @@
     export let validation = ""
     export let nameClass = null
     export let inputClass = null
+    export let onEnterHandler = null
 
     let inputKey = "input-" + randomString()
     let passwordType = "password"
@@ -18,6 +19,13 @@
 
     const showPassword = () => {
         passwordType = passwordType === "password" ? "text" : "password"
+    }
+
+    const onEnter = (e) => {
+        const keyCode = e.keyCode || e.which
+		if (keyCode === 13) {
+			onEnterHandler && onEnterHandler(e)
+		}
     }
 </script>
 
@@ -27,7 +35,7 @@
         <div class="flex py-[10px] px-[14px] gap-2 self-stretch rounded-lg border border-gray-300 bg-white input-box-shadow">
             <div class="flex flex-1 items-center gap-2">
                 <slot name="icon" />
-                <input id={inputKey} type={isPassword ? passwordType : type} {name} {placeholder} validation={validation} autocomplete={true} class="flex-1 text-gray-900 text-base font-normal w-full focus:outline-none placeholder:text-gray-500 {inputClass}">
+                <input on:keydown={onEnter} id={inputKey} type={isPassword ? passwordType : type} {name} {placeholder} validation={validation} autocomplete={true} class="flex-1 text-gray-900 text-base font-normal w-full focus:outline-none placeholder:text-gray-500 {inputClass}">
                 {#if isPassword}
                     <button on:click|preventDefault={showPassword}>
                         {#if passwordType === "text"}

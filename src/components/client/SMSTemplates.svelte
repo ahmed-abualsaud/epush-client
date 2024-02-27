@@ -65,7 +65,7 @@
         </button>
     </div>
     <TableContainer>
-        <Table showDateSelector={false} showFilter={false} tableName="SMS Templates" tableTitle="Templates" description="Mange your saved SMS Templates" {columns} noColumnsTruncate={["message"]} {noDataMessage} {noDataDescription} {mapFunction} fetchFunction={listMessageTemplatesPaginated} showDeleteText={false} {onDelete} {onBulkDelete} {onEdit} showEditText={false}>
+        <Table showDateSelector={false} showFilter={false} tableName="SMS Templates" tableTitle="Templates" description="Manage your saved SMS Templates" {columns} noColumnsTruncate={["message"]} {noDataMessage} {noDataDescription} {mapFunction} fetchFunction={listMessageTemplatesPaginated} showDeleteText={false} {onDelete} {onBulkDelete} {onEdit} showEditText={false}>
             <div slot="no-data">
                 <button on:click={() => showModal(AddSMSTemaplate)} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-xl border border-gray-900 bg-gray-900 shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">

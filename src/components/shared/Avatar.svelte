@@ -1,15 +1,15 @@
 <script>
+	import AddTicket from "../client/Support/AddTicket.svelte"
+
+    import { empty } from "$lib/helper/utils"
     import { signout } from "../../api/authApi"
-    import { getAuthenticatedUser } from "$lib/helper/auth"
+    import { showModal } from "$lib/helper/modal"
+    import { currentClient } from "$lib/helper/store"
+    import { setcurrentRouteDisplay } from "$lib/router/router"
 
     let defaultAvatar = "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
 
-    let user
-    const loadUser = async () => {
-        user = await getAuthenticatedUser()
-    }
-
-    $: loadUser()
+    let user = {}
 
     let dropDown
     const showDropdown = () => {
@@ -24,23 +24,38 @@
         dropDown.classList.remove('-translate-y-5')
     }
 
+    const showSupportModal = async () => {
+        hideDropdown()
+        await setcurrentRouteDisplay("Support")
+        showModal(AddTicket)
+    }
+
+    const showSettings= async () => {
+        hideDropdown()
+        await setcurrentRouteDisplay("Settings")
+    }
+
     const logout = async () => {
         await signout()
+    }
+
+    $: {
+        user = $currentClient
     }
 </script>
 
 <div class="relative flex flex-col items-start">
-    <button on:click={showDropdown} class="flex flex-col justify-center items-center w-10 h-10 hide-dropdown">
-        <img class="rounded-full" src={user?.avatar ?? defaultAvatar} alt="Avatar" />
+    <button on:click={showDropdown} class="flex flex-col justify-center items-center w-10 h-10 overflow-hidden hide-dropdown">
+        <img class="rounded-full w-full h-full" src={empty(user?.avatar) ? defaultAvatar : user.avatar} alt="Avatar" />
     </button>
     <div bind:this={dropDown} class="hide-dropdown absolute -left-[200px] md:-left-[250px] -bottom-[235px] flex flex-col items-start rounded-lg border border-gray-200 bg-white shadow-md opacity-0 invisible translate-y-0 transition-all duration-500 ease-in-out">
         <div class="flex flex-col items-start w-60 md:w-72 px-3 py-4 border-b border-gray-200 overflow-x-auto">
             <div class="flex items-center gap-3">
                 <div class="flex flex-col justify-center items-center w-10 h-10">
-                    <img class="rounded-full" src={user?.avatar ?? defaultAvatar} alt="Avatar" />
+                    <img class="rounded-full" src={empty(user?.avatar) ? defaultAvatar : user.avatar} alt="Avatar" />
                 </div>
                 <div class="flex flex-col items-start flex-1">
-                    <span class="self-stretch text-gray-700 text-sm font-semibold">{user?.full_name ?? "Unknown"}</span>
+                    <span class="self-stretch text-gray-700 text-sm font-semibold">{user?.first_name + " " + user?.last_name ?? "Unknown"}</span>
                     <span class="self-stretch text-gray-600 text-sm">{user?.email ?? "Unknown"}</span>
                 </div>
             </div>
@@ -48,7 +63,7 @@
         <div class="flex flex-col items-start w-60 md:w-72 bg-white">
             <div class="flex flex-col items-start self-stretch py-1 border-b border-gray-200">
                 <div class="flex items-center self-stretch py-0.5 px-1.5">
-                    <button class="flex items-center flex-1 gap-3 py-[9px] px-2.5 rounded-md hover:bg-gray-200">
+                    <button on:click={showSupportModal} class="flex items-center flex-1 gap-3 py-[9px] px-2.5 rounded-md hover:bg-gray-200">
                         <div class="flex items-center flex-1 gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <g clip-path="url(#clip0_470_3087)">
@@ -65,7 +80,7 @@
                     </button>
                 </div>
                 <div class="flex items-center self-stretch py-0.5 px-1.5">
-                    <button class="flex items-center flex-1 gap-3 py-[9px] px-2.5 rounded-md hover:bg-gray-200">
+                    <button on:click={showSettings} class="flex items-center flex-1 gap-3 py-[9px] px-2.5 rounded-md hover:bg-gray-200">
                         <div class="flex items-center flex-1 gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <g clip-path="url(#clip0_470_18626)">

@@ -26,7 +26,7 @@ export const updateAuthenticatedUser = async (user) =>
 {
     let usr = await getAuthenticatedUser()
 
-    if (user?.id === usr?.id) {
+    if (user?.id == usr?.id) {
         await setAuthenticatedUser(user);
     }
 }

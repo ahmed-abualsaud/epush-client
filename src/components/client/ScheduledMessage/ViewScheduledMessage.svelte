@@ -237,7 +237,7 @@
                     <div class="flex flex-col items-start gap-2 h-[120px] w-full">
                         <div class="flex justify-between items-start self-stretch">
                             <span class="text-gray-700 text-sm font-medium">Message Conent</span>
-                            <span class="text-gray-500 text-sm">Length {message?.length}</span>
+                            <span class="text-gray-500 text-sm">Length: {message?.length}</span>
                         </div>
                         <div class="flex items-start flex-1 self-stretch gap-2 py-3 px-3.5 rounded-lg border border-gray-300 bg-gray-50 shadow-sm">
                             <p class="flex-1 self-stretch text-gray-500">{message?.message}</p>

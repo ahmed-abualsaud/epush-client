@@ -29,7 +29,10 @@ export default {
       fontSize: {
         '2xs': '.6rem',
         '3xs': '.5rem',
-      }
+      },
+      fontFamily: {
+        mono: ['Roboto Mono', 'monospace'],
+      },
     }
   },
   plugins: [

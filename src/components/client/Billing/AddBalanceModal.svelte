@@ -31,7 +31,7 @@
                 <div class="flex items-center self-stretch gap-4">
                     <div class="flex flex-col items-start flex-1 gap-1 self-stretch">
                         <span class="self-stretch text-gray-900 text-lg font-semibold">Add Balance</span>
-                        <span class="self-stretch text-gray-600 text-sm font-semibold">Send complaints or suggestions; we'll respond promptly</span>
+                        <span class="self-stretch text-gray-600 text-sm">Add new balance to your wallet so you can push messages</span>
                     </div>
                 </div>
             </div>

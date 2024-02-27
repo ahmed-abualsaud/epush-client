@@ -96,7 +96,7 @@
 </script>
 
 <div class="flex flex-col items-start self-stretch flex-1 gap-6 px-6">
-    <div class="flex items-center self-stretch gap-4 mb-4">
+    <div class="flex items-center self-stretch gap-4">
         <div class="flex flex-col items-start flex-1 gap-1">
             <span class="self-stretch text-gray-900 text-3xl leading-[38px] font-semibold">Groups</span>
             <span class="self-stretch text-gray-600">Manage your saved groups & group log</span>
@@ -128,14 +128,14 @@
         {#if shownTable === "saved-groups"}
             <Table {columns} afterColumns={["recipients"]} noDataMessage={noSavedGroupsMessage} noDataDescription={noSavedGroupsDescription} onEdit={(group) => onEditGroup(group, true)} showEditText={false} onPreview={onPreviewGroup} showPreviewText={false} onDelete={onDeleteGroup} showDeleteText={false} {onBulkDelete} showFilter={false} showDateSelector={false} defaultCriteria="saved = true" tableName="Message Groups" tableTitle="Saved Groups" description="Search and manage your saved groups." {mapFunction} fetchFunction={getClientSavedGroups}>
                 <div slot="no-data">
-                    <button on:click={() => showModal(AddGroupModal)} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-xl border border-primary-600 bg-primary-600 shadow-sm">
+                    <button on:click={() => showModal(AddGroupModal)} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-xl border border-gray-900 bg-gray-900 shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M9.99984 4.16699V15.8337M4.1665 10.0003H15.8332" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         <span class="text-white text-sm font-semibold">New Group</span>
                     </button>
                 </div>
-                <div class="flex items-center -ms-10" slot="after-column" let:row={row}>
+                <div slot="after-column" class="flex items-center -ms-10" let:row={row}>
                     {#await getMessageGroupRecipients(row.id, 1, 5)}
                         <div class="font-medium text-primary-700">Loading . . . </div>
                     {:then data}
@@ -155,15 +155,7 @@
         {/if}
         {#if shownTable === "group-log"}
             <Table {columns} afterColumns={["recipients"]} noDataMessage={noGroupLogMessage} noDataDescription={noGroupLogDescription} onEdit={(group) => onEditGroup(group, false)} showEditText={false} onPreview={onPreviewGroup} showPreviewText={false} onDelete={onDeleteGroup} showDeleteText={false} {onBulkDelete} showFilter={false} showDateSelector={false} defaultCriteria="saved = false" tableName="Message Groups" tableTitle="Group Log" description="Search and manage your group log." {mapFunction} fetchFunction={getClientGroupsLog}>
-                <div slot="no-data">
-                    <button on:click={() => showModal(AddGroupModal)} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-xl border border-primary-600 bg-primary-600 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M9.99984 4.16699V15.8337M4.1665 10.0003H15.8332" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span class="text-white text-sm font-semibold">New Group</span>
-                    </button>
-                </div>
-                <div class="flex items-center -ms-10" slot="after-column" let:row={row}>
+                <div slot="after-column" class="flex items-center -ms-10" let:row={row}>
                     {#await getMessageGroupRecipients(row.id, 1, 4)}
                         <div class="font-medium text-primary-700">Loading . . . </div>
                     {:then data}

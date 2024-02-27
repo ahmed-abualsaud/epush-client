@@ -1,11 +1,14 @@
 <script>
-	import NoOrdersModal from "../Report/NoOrdersModal.svelte"
-	import NoCreditModal from "../Report/NoCreditModal.svelte"
-	import LanguageAndSender from "../Report/LanguageAndSender.svelte"
+	import NoOrdersModal from "./NoOrdersModal.svelte"
+	import NoCreditModal from "./NoCreditModal.svelte"
+	import LanguageAndSender from "./LanguageAndSender.svelte"
 
 	import { empty } from "$lib/helper/utils"
     import { showModal } from "$lib/helper/modal"
+	import { randomString } from "$lib/helper/strUtils"
     import { currentClient, lastOrder } from "$lib/helper/store"
+
+    export let key = randomString()
 
     let buttonClicked = false
     const expandAddMessage = () => {
@@ -43,7 +46,7 @@
     }
 </script>
 
-<div>
+<div {key}>
     <div class="flex items-center gap-[1px]">
         <button on:click={() => showAddMessageModal(LanguageAndSender, {addMethod: "add-bulk-message"})} class="flex justify-center items-center gap-2 py-2.5 px-2.5 sm:px-4 rounded-l-lg border border-primary-600 bg-primary-600 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -64,8 +67,8 @@
             {/if}
         </button>
     </div>
-    {#if buttonClicked}
-    <div class="flex w-[201px] flex-col items-start absolute right-[136px] top-[84px] rounded-lg border border-gray-200 bg-white shadow-lg z-50">
+    {#if buttonClicked && ! empty(key)}
+    <div {key} class="flex w-[201px] flex-col items-start absolute right-[136px] top-[84px] rounded-lg border border-gray-200 bg-white shadow-lg z-50">
         <div class="flex flex-col items-start self-stretch py-1 px-0 border-b border-b-gray-200">
             <button on:click={addBulkMessages} class="flex items-center self-stretch py-0.5 px-1.5">
                 <div class="flex items-center flex-1 gap-3 py-[9px] px-2.5 rounded-md hover:bg-primary-50">

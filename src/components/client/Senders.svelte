@@ -112,7 +112,7 @@
         </button>
     </div>
     <TableContainer>
-        <Table showDateSelector={false} showFilter={false} tableName="Senders" description="Mange your senders and connections" {columns} {columnsRenders} searchColumns={['sender_name']} {searchFunction} {noDataMessage} {noDataDescription} {mapFunction} {fetchFunction} {onBulkDelete} showBulkDownload={false}>
+        <Table showDateSelector={false} showFilter={false} tableName="Senders" description="Manage your senders and connections" {columns} {columnsRenders} searchColumns={['sender_name']} {searchFunction} {noDataMessage} {noDataDescription} {mapFunction} {fetchFunction} {onBulkDelete} showBulkDownload={false}>
             <div slot="no-data">
                 <button on:click={() => showModal(AddSenderModal)} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-xl border border-gray-900 bg-gray-900 shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">

@@ -32,3 +32,8 @@ export const resetPassword = async (inputs) =>
 {
     return request(HttpMethod.POST, "/auth/user/reset-password", inputs)
 }
+
+export const changePassword = async (inputs) => 
+{
+    return request(HttpMethod.POST, "/auth/user/change-password", inputs)
+}

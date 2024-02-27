@@ -1,16 +1,9 @@
 <script>
-	import ExtendedInput from "../../../shared/ExtendedInput.svelte"
-
 	import { onMount } from "svelte"
-	import { empty } from '$lib/helper/utils'
 	import { message } from "$lib/helper/store"
-
-	let countryCodes = [...new Set($message.connections.map(conn => conn.country_code))]
-	countryCodes = empty(countryCodes.find(c => c == "20")) ? countryCodes : [countryCodes.find(c => c == "20"), ...countryCodes.filter(c => c != "20")]
 
 	let inputs = []
 	let showTooltip = true
-	let inputElements = null
 
 	onMount(() => {
 		$message.validNumbers = []
@@ -34,50 +27,72 @@
 		showTooltip = false
 	}
 
-  let validationFunction = null
-
 	$: {
 		$message.validNumbers = []
 		$message.invalidNumbers = []
-
-		inputs = inputs.map(input => {
-			input.validNumber = ""
-			return input
-		})
 
 		for (let i = 0; i < $message.connections.length; i++) {
             $message.connections[i].numbers = []
         }
 
 		for (let i = 0; i < inputs.length; i++) {
-			let num = "" + inputs[i].prefix + inputs[i].value
+			let num = "" + inputs[i]
+			let isValid = false
 
 			for (let j = 0; j < $message.connections.length; j++) {
 
-				if ($message.connections[j].country_code == "20" && num.startsWith("200")) {
-					num = num.substring(0, 1) + num.substring(2)
+				if ($message.connections[j].country_code == "20" && num.startsWith("0")) {
+					num = "2" + num
+				}
+
+				if ($message.connections[j].country_code == "20" && ! num.startsWith("20") && ! num.startsWith("0")) {
+					num = "20" + num
 				}
 
 				if (num.startsWith($message.connections[j].country_code + $message.connections[j].operator_code + "")) {
 					$message.connections[j].numbers.push(num)
 					$message.validNumbers.push(num)
-					inputs[i].validNumber = num
+					isValid = true
 				}
 			}
 
-			if (empty(inputs[i].validNumber) && ! empty(inputs[i].value)) $message.invalidNumbers.push(num)
+			if (! isValid) $message.invalidNumbers.push(num)
 		}
 
-    $message.validNumbers = [...new Set($message.validNumbers)]
+		$message.validNumbers = [...new Set($message.validNumbers)]
+	}
 
-    validationFunction = (elm) => {
-		let inp = inputs.find(inp => inp.value == elm?.value)
-		if (! empty(inp?.value) && empty(inp?.validNumber)) {
-			return false
+	const filterNumbers = (e) => {
+		const keyCode = e.keyCode || e.which
+		const isValid =
+			keyCode === 8 || // Backspace key
+			keyCode === 13 || // Enter key
+			keyCode === 16 || // Shift key
+			keyCode === 17 || // Control key
+			keyCode === 18 || // Alt key
+			keyCode === 20 || // Caps Lock key
+			keyCode === 37 || // Arrow Left key
+			keyCode === 38 || // Arrow Up key
+			keyCode === 39 || // Arrow Right key
+			keyCode === 40 || // Arrow Down key
+			(keyCode >= 48 && keyCode <= 57) || // Numbers 0-9
+			(e.ctrlKey && (keyCode === 97 || keyCode === 65)) || // Ctrl+A (97 for regular A, 65 for numpad A)
+			(e.ctrlKey && (keyCode === 118 || keyCode === 86)) || // Ctrl+V (118 for regular V, 86 for numpad V)
+			(e.ctrlKey && keyCode === 90) || // Ctrl+Z
+			(e.ctrlKey && keyCode === 88) || // Ctrl+X
+			(e.ctrlKey && keyCode === 67);    // Ctrl+C
+
+		if (!isValid) {
+			e.preventDefault();
+			errorAlert("Invalid input, please type a valid character or number");
 		}
-		return true
-    }
-  }
+	}
+
+	const validateNumbersInput = (e) => {
+		let lines = e.target.value.split('\n')
+		e.target.value = lines.filter(n => ! isNaN(n) || n == "\n").join('\n')
+		inputs = lines.filter(Number)
+	}
 </script>
 
 
@@ -106,9 +121,11 @@
         </svg>
       </div>
     </div>
-    <span class="text-gray-700 text-sm">You can enter new number by pressing TAB button</span>
+    <span class="text-gray-700 text-sm">You can paste your copied numbers here!</span>
   </div>
   <span class="text-gray-500 text-sm">Total Numbers: {inputs.length}/10,000</span>
 </div>
 
-<ExtendedInput bind:inputElements={inputElements} placeholder="01x xxxx xxxx " type="phone" prefixes={countryCodes} bind:inputs={inputs} {validationFunction}/>
+<div class="flex flex-col items-start self-stretch flex-1 gap-1.5">
+	<textarea on:input={validateNumbersInput} on:keydown={filterNumbers} placeholder="Enter your message.." class="flex items-start flex-1 self-stretch gap-2 py-3 px-3.5 rounded-lg border border-gray-300 bg-white shadow-sm outline-none min-h-44" />
+</div>

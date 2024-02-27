@@ -1,4 +1,6 @@
 <script>
+	import NoData from "../../shared/NoData.svelte"
+
 	import { onMount } from "svelte"
     import { empty } from "$lib/helper/utils"
     import { errorAlert } from "$lib/helper/alert"
@@ -107,6 +109,12 @@
         numbersAttributes = empty(rows) ? [] : rows[0].split(/,\s*/).map(key => key.toLowerCase())
         let indexOfPhone = numbersAttributes.indexOf("phone")
 
+        if (! empty(numbersAttributes) && numbersAttributes.length == 1 && ! isNaN(numbersAttributes[0])) {
+            numbersAttributes = ["phone"]
+            indexOfPhone = 0
+            rows = ["phone", ...rows.filter(Number)]
+        }
+
         if (loadComplete && indexOfPhone < 0) {
             loadError = true
             return
@@ -189,7 +197,9 @@
             <span class="text-gray-700 text-sm font-semibold text-nowrap whitespace-nowrap">Download Sample</span>
         </button>
     </div>
-    {#if loadInProgress}
+    {#if empty($currentClient.connections)}
+        <NoData message="You don’t have any connections for now!" description="Your connections needs to be bound to can create groups" clazz="max-h-[222px]" />
+    {:else if loadInProgress}
     <div class="relative flex items-start self-stretch gap-1 p-4 rounded-xl border {loadError ? "border-error-300 bg-error-25" : (loadComplete ? "border-primary-600 bg-white" : "border-gray-200 bg-white")}">
         <div class="flex items-start flex-1 gap-4">
             <div class="flex justify-center items-center w-8 h-8 p-2 rounded-[28px] border-4 {loadError ? "border-error-50 bg-error-100" : "border-primary-50 bg-primary-100"}">

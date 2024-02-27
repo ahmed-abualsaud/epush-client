@@ -43,3 +43,12 @@ export const parseWordFile = (content) => {
 export const parseTextFile = (content) => {
     return [...new Set(content.split("\n").map(row => row.trim()).filter(n => n && n))]
 }
+
+export function getFileNameFromResponseHeaders(headers) {
+    const disposition = headers['content-disposition']
+    const match = disposition.match(/filename="(.+)"/i)
+    if (match && match[1]) {
+		return match[1]
+    }
+    return 'export.pdf'
+}

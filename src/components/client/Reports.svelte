@@ -45,7 +45,7 @@
         segments: 'number_of_segments'
     }
 
-    let columnsFilters= {
+    let columnsFilters = {
         sender_name: [{select: () => renderSenderName('With any sender name', 0), value: '{skip}'}, ...$clientSenderNames.map((sender, idx) => ({select: () => renderSenderName(sender, idx + 4), value: sender}))],
         status: [{select: () => renderSenderName('With any status', 1), value: '{skip}'}, {select:() => renderStatus(true), value: 1, type: "int"}, {select: () => renderStatus(false), value: 0, type: "int"}],
         recipients: [
@@ -170,9 +170,9 @@
 </script>
 
 <div class="flex flex-col items-start self-stretch flex-1 gap-8 px-6">
-    <div class="flex flex-col items-start self-stretch gap-5 w-full">
+    <div class="flex flex-col items-start self-stretch gap-6 w-full">
 
-        <div class="flex items-center self-stretch gap-4 mb-4">
+        <div class="flex items-center self-stretch gap-4">
             <div class="flex flex-col items-start flex-1 gap-1">
                 <span class="self-stretch text-gray-900 text-3xl leading-[38px] font-semibold">Reports</span>
                 <span class="self-stretch text-gray-600">Manage and view your sent messages</span>
@@ -278,44 +278,86 @@
 
     <TableContainer>
     {#if shownTable === "all"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getClientMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getClientMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
-                <AddMessageButton />
+                <AddMessageButton key={1} />
             </div>
         </Table>
     {/if}
     {#if shownTable === "bulk-messages"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Bulk Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getBulkMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Bulk Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getBulkMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
-                <AddMessageButton />
+                <AddMessageButton key={2} />
             </div>
         </Table>
     {/if}
     {#if shownTable === "custom-messages"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
-                <AddMessageButton />
+                <AddMessageButton key={3} />
             </div>
         </Table>
     {/if}
     {#if shownTable === "custom-with-parameters"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom With Parameters' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomWithParametersMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom With Parameters' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomWithParametersMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
-                <AddMessageButton />
+                <AddMessageButton key={4} />
             </div>
         </Table>
     {/if}
     {#if shownTable === "group-sms"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Group SMS' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getGroupSMSMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Group SMS' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getGroupSMSMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
-                <AddMessageButton />
+                <AddMessageButton key={5} />
             </div>
         </Table>
     {/if}
     {#if shownTable === "drafts"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = true AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getDraftMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = true AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getDraftMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
-                <AddMessageButton />
+                <AddMessageButton key={6} />
             </div>
         </Table>
     {/if}

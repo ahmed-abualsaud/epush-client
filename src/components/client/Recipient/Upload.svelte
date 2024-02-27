@@ -2,6 +2,7 @@
 	import FromFile from "./Upload/FromFile.svelte"
 	import SavedGroup from "./Upload/SavedGroup.svelte"
 	import BulkNumbers from "./Upload/BulkNumbers.svelte"
+	import ExtendedForm from "./Upload/ExtendedForm.svelte"
 	import FileWithParameters from "./Upload/FileWithParameters.svelte"
 
     import { empty } from "$lib/helper/utils"
@@ -52,37 +53,47 @@
 <div class="flex flex-col items-start flex-1 self-stretch gap-4">
     <div class="flex flex-col items-start self-stretch gap-2 border-b border-b-gray-200">
         <div class="flex items-start gap-4">
+            <button on:click={() => setUploadMethod("add-extended-form")} class="flex justify-center items-center gap-2 p-3 {addMethod == "add-extended-form" && "border-b-2 border-b-primary-700 bg-primary-50"}">
+                <i class="fa-regular fa-arrow-down-big-small {addMethod == "add-extended-form" ? "text-[#527615]" : "text-[#667085]"}"></i>
+                <span class="{addMethod == "add-extended-form" ? "text-primary-700" : "text-gray-500"} text-sm font-medium">Extended Form</span>
+            </button>
+
             <button on:click={() => setUploadMethod("add-bulk-message")} class="flex justify-center items-center gap-2 p-3 {addMethod == "add-bulk-message" && "border-b-2 border-b-primary-700 bg-primary-50"}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M10.8332 5.83333H4.33317C3.39975 5.83333 2.93304 5.83333 2.57652 6.01499C2.26292 6.17478 2.00795 6.42975 1.84816 6.74335C1.6665 7.09987 1.6665 7.56658 1.6665 8.5V11.5C1.6665 12.4334 1.6665 12.9001 1.84816 13.2567C2.00795 13.5703 2.26292 13.8252 2.57652 13.985C2.93304 14.1667 3.39975 14.1667 4.33317 14.1667H10.8332M14.1665 5.83333H15.6665C16.5999 5.83333 17.0666 5.83333 17.4232 6.01499C17.7368 6.17478 17.9917 6.42975 18.1515 6.74335C18.3332 7.09987 18.3332 7.56658 18.3332 8.5V11.5C18.3332 12.4334 18.3332 12.9001 18.1515 13.2567C17.9917 13.5703 17.7368 13.8252 17.4232 13.985C17.0666 14.1667 16.5999 14.1667 15.6665 14.1667H14.1665M14.1665 17.5L14.1665 2.5M16.2498 2.50001L12.0832 2.5M16.2498 17.5L12.0832 17.5" stroke={addMethod == "add-bulk-message" ? "#527615" : "#667085"} stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span class="{addMethod == "add-bulk-message" ? "text-primary-700" : "text-gray-500"} font-medium">Bulk Numbers</span>
+                <span class="{addMethod == "add-bulk-message" ? "text-primary-700" : "text-gray-500"} text-sm font-medium">Bulk Numbers</span>
             </button>
 
             <button on:click={() => setUploadMethod("add-custom-message")} class="flex justify-center items-center gap-2 p-3 {addMethod == "add-custom-message" && "border-b-2 border-b-primary-700 bg-primary-50"}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M10.0002 11.6665V7.08317C10.0002 6.39281 10.5598 5.83317 11.2502 5.83317C11.9405 5.83317 12.5002 6.39281 12.5002 7.08317V11.6665C12.5002 13.0472 11.3809 14.1665 10.0002 14.1665C8.61945 14.1665 7.50016 13.0472 7.50016 11.6665V8.33317M7.3335 18.3332H12.6668C14.067 18.3332 14.767 18.3332 15.3018 18.0607C15.7722 17.821 16.1547 17.4386 16.3943 16.9681C16.6668 16.4334 16.6668 15.7333 16.6668 14.3332V5.6665C16.6668 4.26637 16.6668 3.56631 16.3943 3.03153C16.1547 2.56112 15.7722 2.17867 15.3018 1.93899C14.767 1.6665 14.067 1.6665 12.6668 1.6665H7.3335C5.93336 1.6665 5.2333 1.6665 4.69852 1.93899C4.22811 2.17867 3.84566 2.56112 3.60598 3.03153C3.3335 3.56631 3.3335 4.26637 3.3335 5.6665V14.3332C3.3335 15.7333 3.3335 16.4334 3.60598 16.9681C3.84566 17.4386 4.22811 17.821 4.69852 18.0607C5.2333 18.3332 5.93336 18.3332 7.3335 18.3332Z" stroke={addMethod == "add-custom-message" ? "#527615" : "#667085"} stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span class="{addMethod == "add-custom-message" ? "text-primary-700" : "text-gray-500"} font-medium">From File</span>
+                <span class="{addMethod == "add-custom-message" ? "text-primary-700" : "text-gray-500"} text-sm font-medium">From File</span>
             </button>
 
             <button on:click={() => setUploadMethod("add-custom-with-parameters")} class="flex justify-center items-center gap-2 p-3 {addMethod == "add-custom-with-parameters" && "border-b-2 border-b-primary-700 bg-primary-50"}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M13.3335 3.33317C14.1085 3.33317 14.496 3.33317 14.8139 3.41836C15.6766 3.64952 16.3505 4.32339 16.5816 5.18612C16.6668 5.50404 16.6668 5.89153 16.6668 6.6665V14.3332C16.6668 15.7333 16.6668 16.4334 16.3943 16.9681C16.1547 17.4386 15.7722 17.821 15.3018 18.0607C14.767 18.3332 14.067 18.3332 12.6668 18.3332H7.3335C5.93336 18.3332 5.2333 18.3332 4.69852 18.0607C4.22811 17.821 3.84566 17.4386 3.60598 16.9681C3.3335 16.4334 3.3335 15.7333 3.3335 14.3332V6.6665C3.3335 5.89153 3.3335 5.50404 3.41868 5.18612C3.64985 4.32339 4.32372 3.64952 5.18645 3.41836C5.50436 3.33317 5.89185 3.33317 6.66683 3.33317M10.0002 12.9165V9.1665C10.0002 8.47615 10.5598 7.9165 11.2502 7.9165C11.9405 7.9165 12.5002 8.47615 12.5002 9.1665V12.9165C12.5002 14.2972 11.3809 15.4165 10.0002 15.4165C8.61945 15.4165 7.50016 14.2972 7.50016 12.9165V9.58317M8.00016 4.99984H12.0002C12.4669 4.99984 12.7002 4.99984 12.8785 4.90901C13.0353 4.82912 13.1628 4.70163 13.2427 4.54483C13.3335 4.36657 13.3335 4.13321 13.3335 3.6665V2.99984C13.3335 2.53313 13.3335 2.29977 13.2427 2.12151C13.1628 1.96471 13.0353 1.83723 12.8785 1.75733C12.7002 1.6665 12.4669 1.6665 12.0002 1.6665H8.00016C7.53345 1.6665 7.3001 1.6665 7.12184 1.75733C6.96504 1.83723 6.83755 1.96471 6.75766 2.12151C6.66683 2.29977 6.66683 2.53313 6.66683 2.99984V3.6665C6.66683 4.13321 6.66683 4.36657 6.75766 4.54483C6.83755 4.70163 6.96504 4.82912 7.12184 4.90901C7.3001 4.99984 7.53345 4.99984 8.00016 4.99984Z" stroke={addMethod == "add-custom-with-parameters" ? "#527615" : "#667085"} stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span class="{addMethod == "add-custom-with-parameters" ? "text-primary-700" : "text-gray-500"} font-medium">File with Parameters</span>
+                <span class="{addMethod == "add-custom-with-parameters" ? "text-primary-700" : "text-gray-500"} text-sm font-medium">File with Parameters</span>
             </button>
 
             <button on:click={() => setUploadMethod("add-group-sms")} class="flex justify-center items-center gap-2 p-3 {addMethod == "add-group-sms" && "border-b-2 border-b-primary-700 bg-primary-50"}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M18.3332 17.5V15.8333C18.3332 14.2801 17.2709 12.9751 15.8332 12.605M12.9165 2.7423C14.1381 3.23679 14.9998 4.43443 14.9998 5.83333C14.9998 7.23224 14.1381 8.42988 12.9165 8.92437M14.1665 17.5C14.1665 15.9469 14.1665 15.1703 13.9128 14.5577C13.5745 13.741 12.9255 13.092 12.1088 12.7537C11.4962 12.5 10.7196 12.5 9.1665 12.5H6.6665C5.11337 12.5 4.3368 12.5 3.72423 12.7537C2.90747 13.092 2.25855 13.741 1.92024 14.5577C1.6665 15.1703 1.6665 15.9469 1.6665 17.5M11.2498 5.83333C11.2498 7.67428 9.75745 9.16667 7.9165 9.16667C6.07555 9.16667 4.58317 7.67428 4.58317 5.83333C4.58317 3.99238 6.07555 2.5 7.9165 2.5C9.75745 2.5 11.2498 3.99238 11.2498 5.83333Z" stroke={addMethod == "add-group-sms" ? "#527615" : "#667085"} stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span class="{addMethod == "add-group-sms" ? "text-primary-700" : "text-gray-500"} font-medium">Saved Group</span>
+                <span class="{addMethod == "add-group-sms" ? "text-primary-700" : "text-gray-500"} text-sm font-medium">Saved Group</span>
             </button>
         </div>
     </div>
 
     <div class="flex flex-col items-start flex-1 self-stretch gap-4 {showGroupInput ? "max-h-[226px]" : "max-h-[280px]"} {(showGroupSaveMessage || showGroupSaveErrorMessage) && "max-h-[212px]"} {addMethod == "add-group-sms" && "max-h-[290px]"}">
+
+        {#if addMethod == "add-extended-form"}
+            <ExtendedForm />
+        {/if}
+
         {#if addMethod == "add-bulk-message"}
             <BulkNumbers />
         {/if}

@@ -1,5 +1,4 @@
 <script>
-	import { onMount } from "svelte"
     import { deepCopy } from "$lib/helper/utils"
     import { showModal } from "$lib/helper/modal"
     import { exportExcel } from "../../api/fileApi"
@@ -12,10 +11,6 @@
 	import AddBalanceModal from "./Billing/AddBalanceModal.svelte"
 	import TableContainer from "../shared/table/TableContainer.svelte"
 
-    onMount(async () => {
-
-    })
-
     let noDataMessage =  "You don't have any orders for now!"
     let noDataDescription = "Your orders will appear here."
 
@@ -24,12 +19,12 @@
         sales_name: 'sales_name',
         pricelist: 'price',
         payment_method: 'payment_method',
-        status: 'status',
+        // status: 'status',
         collection_date: 'collection_date'
     }
 
     let columnsFilters= {
-        status: [{select: () => renderPaymentMethod('With any status', 2), value: '{skip}'}, {select: () => renderStatus('Paid'), value: 'Paid'}, {select: () => renderStatus('Pending'), value: 'Pending'}],
+        // status: [{select: () => renderPaymentMethod('With any status', 2), value: '{skip}'}, {select: () => renderStatus('Paid'), value: 'Paid'}, {select: () => renderStatus('Pending'), value: 'Pending'}],
         sales_name: [{select: () => renderPaymentMethod('With any sales name', 3), value: '{skip}'}, ...$sales.map((sls, idx) => ({select: () => renderPaymentMethod(sls, idx), value: sls}))],
         payment_method: [{select: () => renderPaymentMethod('With any payment method', 1), value: '{skip}'}, ...$paymentMethods.map((payMtd, idx) => ({select: () => renderPaymentMethod(payMtd, idx + 4), value: payMtd}))],
         credit: [
@@ -67,7 +62,7 @@
         order.credit_temp = order.credit
         order.credit = () => renderCredit(order.credit_temp, order.payment_method_name)
         order.status_temp = order.status
-        order.status = () => renderStatus(order.status_temp)
+        // order.status = () => renderStatus(order.status_temp)
         return order
     }
 
@@ -155,11 +150,11 @@
     <TableContainer>
         <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} {mapFunction} fetchFunction={getClientOrders} {onDownload} showDownloadText={false} tableName="Orders" tableTitle="Client Orders" description="Search and find your orders.">
             <div slot="no-data">
-                <button on:click={() => showModal(AddBalanceModal)} class="flex justify-center items-center gap-2 py-2.5 px-[18px] rounded-lg border border-primary-600 bg-primary-600 shadow-sm">
+                <button on:click={() => showModal(AddBalanceModal)} class="flex justify-center items-center gap-2 py-2.5 px-4 rounded-xl border border-gray-900 bg-gray-900 shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M9.99984 4.1665V15.8332M4.1665 9.99984H15.8332" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.8332 4.16667C10.8332 5.08714 8.78114 5.83333 6.24984 5.83333C3.71853 5.83333 1.6665 5.08714 1.6665 4.16667M10.8332 4.16667C10.8332 3.24619 8.78114 2.5 6.24984 2.5C3.71853 2.5 1.6665 3.24619 1.6665 4.16667M10.8332 4.16667V5.41667M1.6665 4.16667V14.1667C1.6665 15.0871 3.71853 15.8333 6.24984 15.8333M6.24984 9.16667C6.10938 9.16667 5.9704 9.16437 5.83317 9.15987C3.49713 9.08332 1.6665 8.3694 1.6665 7.5M6.24984 12.5C3.71853 12.5 1.6665 11.7538 1.6665 10.8333M18.3332 9.58333C18.3332 10.5038 16.2811 11.25 13.7498 11.25C11.2185 11.25 9.1665 10.5038 9.1665 9.58333M18.3332 9.58333C18.3332 8.66286 16.2811 7.91667 13.7498 7.91667C11.2185 7.91667 9.1665 8.66286 9.1665 9.58333M18.3332 9.58333V15.8333C18.3332 16.7538 16.2811 17.5 13.7498 17.5C11.2185 17.5 9.1665 16.7538 9.1665 15.8333V9.58333M18.3332 12.7083C18.3332 13.6288 16.2811 14.375 13.7498 14.375C11.2185 14.375 9.1665 13.6288 9.1665 12.7083" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span class="text-white font-semibold">Add Balance</span>
+                    <span class="text-white text-sm font-semibold">Add Balance</span>
                 </button>
             </div>
         </Table>

@@ -186,9 +186,9 @@
 </script>
 
 <div class="flex flex-col items-start self-stretch flex-1 gap-8 px-6">
-    <div class="flex flex-col items-start self-stretch gap-5 w-full">
+    <div class="flex flex-col items-start self-stretch gap-6 w-full">
 
-        <div class="flex items-center self-stretch gap-4 mb-4">
+        <div class="flex items-center self-stretch gap-4">
             <div class="flex flex-col items-start flex-1 gap-1">
                 <span class="self-stretch text-gray-900 text-3xl leading-[38px] font-semibold">Scheduled Messages</span>
                 <span class="self-stretch text-gray-600">Manage and view your sent messages</span>
@@ -232,35 +232,70 @@
 
     <TableContainer>
     {#if shownTable === "all"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getClientScheduledMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getClientScheduledMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>
         </Table>
     {/if}
     {#if shownTable === "bulk-messages"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND send_type = 'Bulk Messages' AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getScheduledBulkMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND send_type = 'Bulk Messages' AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getScheduledBulkMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>
         </Table>
     {/if}
     {#if shownTable === "custom-messages"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom Messages' AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getScheduledCustomMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom Messages' AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getScheduledCustomMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>
         </Table>
     {/if}
     {#if shownTable === "custom-with-parameters"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom With Parameters' AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getScheduledCustomWithParametersMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom With Parameters' AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getScheduledCustomWithParametersMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>
         </Table>
     {/if}
     {#if shownTable === "group-sms"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND send_type = 'Group SMS' AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getScheduledGroupSMSMessages}>
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onEdit={onEditMessage} showEditText={false} onPreview={onPreviewMessage} showPreviewText={false} onDelete={onDeleteMessage} showDeleteText={false} onCustomAction={onPush} {onBulkEdit} {onBulkDelete} customActionText="Push" tableName="Messages" tableTitle="Scheduled Messages" description="Search and find your scheduled messages." defaultCriteria={"draft = false AND approved = true AND send_type = 'Group SMS' AND scheduled_at >= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getScheduledGroupSMSMessages} searchColumns={[
+            'sender_name',
+            'message',
+            'sent_date',
+            'type_of_send',
+            'status',
+            'language'
+        ]}>
             <div slot="no-data">
                 <AddMessageButton />
             </div>

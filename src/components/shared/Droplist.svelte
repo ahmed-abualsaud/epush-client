@@ -44,7 +44,7 @@
     <span class="text-gray-700 text-sm font-medium">{name}</span>        
     {/if}
 
-    <button on:click={toggleDropList} class="hide-dropdown flex px-3.5 py-2.5 items-center gap-2 self-stretch rounded-lg border border-gray-300 bg-white shadow-sm">
+    <button on:click={toggleDropList} class="hide-dropdown flex px-3.5 py-2.5 items-center gap-2 self-stretch rounded-lg border border-gray-300 bg-white shadow-sm {clazz}">
         <div class="flex items-center flex-1 gap-2 truncate">
             <slot name="icon" />
             <span class="text-gray-500 truncate">{empty(selectedOption) ? placeholder : selectedOption}</span>

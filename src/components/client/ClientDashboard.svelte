@@ -8,6 +8,7 @@
 	import Sidebar from "../shared/Sidebar.svelte"
 	import Container from "../shared/Container.svelte"
 
+	import { empty } from "$lib/helper/utils"
 	import { getClient } from "../../api/clientApi"
     import { getLastOrder, listPaymentMethods } from "../../api/expenseApi"
     import { listSales, getClientSendersAndConnections } from "../../api/clientApi"
@@ -21,7 +22,12 @@
 		client.connections = await getClientSendersAndConnections()
 
         lastOrder = await getLastOrder()
-        lastOrder.number_of_messages = Math.floor(client.balance / lastOrder.pricelist.price)
+
+		lastOrder.number_of_messages = 0
+		if (! empty(lastOrder?.pricelist?.price) && ! empty(client.balance)) {
+			lastOrder.number_of_messages = Math.floor(client.balance / lastOrder.pricelist.price)
+		}
+
 		// client.balance = 0
         setCurrentClient(client)
         setLastOrder(lastOrder)

@@ -62,7 +62,7 @@
         message.recipients = message.number_of_recipients
         message.language = message.language.name
         message.type_of_send = () => renderTypeOfSend(message.send_type)
-        message.status = () => renderMessageStatus(message.sent)
+        // message.status = () => renderMessageStatus(message.sent)
         return message
     }
 
@@ -282,7 +282,7 @@
                     sales_name: 'sales_name',
                     pricelist: 'price',
                     payment_method: 'payment_method',
-                    status: 'status',
+                    // status: 'status',
                     collection_date: 'collection_date'
                 }}>
                     <div slot="no-data">

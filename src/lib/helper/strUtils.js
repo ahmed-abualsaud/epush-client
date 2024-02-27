@@ -221,3 +221,7 @@ export const isValidJSON = (str) => {
 		return false;
 	}
 }
+
+export const validateEmail = (email) => {  
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}

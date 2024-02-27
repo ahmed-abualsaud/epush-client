@@ -26,8 +26,8 @@ export const handleErrorResponse = async (error) =>
         await refreshAndNavigate("signin")
     }
 
-    let errorMessage = error.response?.data?.error ?? error.response?.data?.message
-    errorMessage = errorMessage?.includes("database") ? "Something went wrong in the database level" : errorMessage
+    let errorMessage = empty(error.response?.data?.error) ? error.response?.data?.message : error.response?.data?.error
+    errorMessage = errorMessage?.includes("database") || errorMessage?.toLowerCase()?.includes("sql") ? "Something went wrong in the database level" : errorMessage
 
     throw new Error(errorMessage)
 }
@@ -78,6 +78,10 @@ const sendRequest = async (method, path, data = {}, config = {}) => {
             return result.data.data
         }
 
+        if (typeof result === "object" && data instanceof FormData) {
+            return result.data.data
+        }
+    
         return result
     } catch (error) {
         return handleErrorResponse(error)
