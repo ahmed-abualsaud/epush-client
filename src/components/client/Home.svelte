@@ -62,7 +62,7 @@
         message.recipients = message.number_of_recipients
         message.language = message.language.name
         message.type_of_send = () => renderTypeOfSend(message.send_type)
-        // message.status = () => renderMessageStatus(message.sent)
+        message.status = () => renderMessageStatus(message.sent)
         return message
     }
 
@@ -112,7 +112,7 @@
         order.credit_temp = order.credit
         order.credit = () => renderCredit(order.credit_temp, order.payment_method_name)
         order.status_temp = order.status
-        order.status = () => renderOrderStatus(order.status_temp)
+        // order.status = () => renderOrderStatus(order.status_temp)
         return order
     }
 

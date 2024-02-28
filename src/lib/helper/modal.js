@@ -4,6 +4,7 @@ export const showModal = (component, props = {}) => {
 
     if (modal) {
         modal.$destroy()
+        document.body.style.overflow = ''
     }
 
     modal = new component({target: document.body, props})

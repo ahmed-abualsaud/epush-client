@@ -15,57 +15,57 @@ export const getClientLastOneYearMessages = async () =>
 
 export const getClientMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getBulkMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND send_type = 'Bulk Messages' AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND send_type = 'Bulk Messages' AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getCustomMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND send_type = 'Custom Messages' AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND send_type = 'Custom Messages' AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getCustomWithParametersMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND send_type = 'Custom With Parameters' AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND send_type = 'Custom With Parameters' AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getGroupSMSMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND send_type = 'Group SMS' AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND send_type = 'Group SMS' AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getDraftMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = true AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = true AND scheduled_at <= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getClientScheduledMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getScheduledBulkMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND send_type = 'Bulk Messages' AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND send_type = 'Bulk Messages' AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getScheduledCustomMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND send_type = 'Custom Messages' AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND send_type = 'Custom Messages' AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getScheduledCustomWithParametersMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND send_type = 'Custom With Parameters' AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND send_type = 'Custom With Parameters' AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const getScheduledGroupSMSMessages = async (page = 1, take = 10) => 
 {
-    return search("messages", "draft = false AND approved = true AND send_type = 'Group SMS' AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
+    return search("messages", "draft = false AND send_type = 'Group SMS' AND scheduled_at >= '" + getDatetimeString() + "'", true, page, take)
 }
 
 export const latestMessages = async (take = 4) => 

@@ -1,5 +1,8 @@
 <script>
+    import Numbers from "./Numbers.svelte"
 	import DateAndPush from "./DateAndPush.svelte"
+	import Droplist from "../../shared/Droplist.svelte"
+	import Textarea from "../../shared/Textarea.svelte"
 	import AddMessageModal from "./AddMessageModal.svelte"
 
 	import { onMount } from "svelte"
@@ -10,10 +13,6 @@
     import { splitStringByLength } from "$lib/helper/strUtils"
     import { listMessageTemplates, listMessageFilters } from "../../../api/messageApi"
     import { calcMessageLength, getMessageTemplateKeys, messageLanguageFilter } from "$lib/helper/message"
-
-	import Droplist from "../../shared/Droplist.svelte"
-	import Textarea from "../../shared/Textarea.svelte"
-	import Numbers from "./Numbers.svelte";
 
     export let addMethod = ""
 

@@ -119,6 +119,7 @@
                 })
             }
 
+            window.location.reload()
             if (empty(result)) {
                 showModal(PushErrorModal)
             } else {

@@ -278,7 +278,7 @@
 
     <TableContainer>
     {#if shownTable === "all"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getClientMessages} searchColumns={[
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getClientMessages} searchColumns={[
             'sender_name',
             'message',
             'sent_date',
@@ -292,7 +292,7 @@
         </Table>
     {/if}
     {#if shownTable === "bulk-messages"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Bulk Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getBulkMessages} searchColumns={[
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND send_type = 'Bulk Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getBulkMessages} searchColumns={[
             'sender_name',
             'message',
             'sent_date',
@@ -306,7 +306,7 @@
         </Table>
     {/if}
     {#if shownTable === "custom-messages"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomMessages} searchColumns={[
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND send_type = 'Custom Messages' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomMessages} searchColumns={[
             'sender_name',
             'message',
             'sent_date',
@@ -320,7 +320,7 @@
         </Table>
     {/if}
     {#if shownTable === "custom-with-parameters"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Custom With Parameters' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomWithParametersMessages} searchColumns={[
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND send_type = 'Custom With Parameters' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getCustomWithParametersMessages} searchColumns={[
             'sender_name',
             'message',
             'sent_date',
@@ -334,7 +334,7 @@
         </Table>
     {/if}
     {#if shownTable === "group-sms"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND approved = true AND send_type = 'Group SMS' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getGroupSMSMessages} searchColumns={[
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = false AND send_type = 'Group SMS' AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getGroupSMSMessages} searchColumns={[
             'sender_name',
             'message',
             'sent_date',
@@ -348,7 +348,7 @@
         </Table>
     {/if}
     {#if shownTable === "drafts"}
-        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = true AND approved = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getDraftMessages} searchColumns={[
+        <Table {columns} {noDataMessage} {noDataDescription} {columnsFilters} onPreview={onPreviewMessage} tableName="Messages" description="Search and find your messages report." defaultCriteria={"draft = true AND scheduled_at <= '" + getDatetimeString() + "'" } {mapFunction} fetchFunction={getDraftMessages} searchColumns={[
             'sender_name',
             'message',
             'sent_date',
