@@ -9,7 +9,7 @@
 	countryCodes = empty(countryCodes.find(c => c == "20")) ? countryCodes : [countryCodes.find(c => c == "20"), ...countryCodes.filter(c => c != "20")]
 
 	let inputs = []
-	let showTooltip = true
+	let showTooltip = false
 	let inputElements = null
 
 	onMount(() => {

@@ -15,9 +15,11 @@
 
     const okay = () => {
         hideModal()
+        window.location.reload()
     }
 
     const sendNewMessage = () => {
+        window.location.reload()
         showModal(LanguageAndSender, {addMethod: "add-bulk-message"})
     }
 

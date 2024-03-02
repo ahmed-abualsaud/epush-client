@@ -3,7 +3,7 @@
 	import { message } from "$lib/helper/store"
 
 	let inputs = []
-	let showTooltip = true
+	let showTooltip = false
 
 	onMount(() => {
 		$message.validNumbers = []

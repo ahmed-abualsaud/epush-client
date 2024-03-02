@@ -31,7 +31,7 @@
             totalPrice = ($message.messageWithAttributes.reduce((sum, msg) => sum += msg.segments.length, 0) * messagePrice).toFixed(2)
         }
 
-        if (totalPrice > $currentClient.balance) {
+        if (parseFloat(totalPrice) > parseFloat($currentClient.balance)) {
             showPopup("no-credit")
             enoughCredit = false
         }
@@ -138,8 +138,8 @@
                 })
             }
 
-            window.location.reload()
             if (empty(result)) {
+                window.location.reload()
                 showModal(PushErrorModal)
             } else {
                 showModal(PushSuccessModal)
