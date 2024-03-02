@@ -8,11 +8,13 @@
 	import { onMount } from "svelte"
 	import { empty } from "$lib/helper/utils"
     import { showModal } from "$lib/helper/modal"
+    import { showPopup } from "$lib/helper/popup"
     import { errorAlert } from "$lib/helper/alert"
     import { message, lastOrder } from "$lib/helper/store"
     import { splitStringByLength } from "$lib/helper/strUtils"
     import { listMessageTemplates, listMessageFilters } from "../../../api/messageApi"
     import { calcMessageLength, getMessageTemplateKeys, messageLanguageFilter } from "$lib/helper/message"
+	import ComposedMessagesPopup from "./ComposedMessagesPopup.svelte";
 
     export let addMethod = ""
 
@@ -29,6 +31,7 @@
         textareaText = ""
         censoredWordsNames = []
         attributesOcurrence = []
+        $message.messageWithAttributes = []
         messageFilters = (await listMessageFilters()).map(flt => flt.name)
     })
 
@@ -40,7 +43,12 @@
     const nextStep = () => {
         $message.content = textareaText
         generateMessageAttributes()
-        showModal(DateAndPush, {addMethod})
+
+        if (empty($message.messageWithAttributes)) {
+            showModal(DateAndPush, {addMethod})
+        } else {
+            showPopup("composed-messages")
+        }
     }
 
     const generateMessageAttributes = () => {
@@ -233,3 +241,5 @@
         </div>
     </div>
 </AddMessageModal>
+
+<ComposedMessagesPopup {addMethod} />

@@ -5,7 +5,9 @@
 	import PushSuccessModal from "./PushSuccessModal.svelte"
 	import CalendarDate from "../../shared/CalendarDate.svelte"
 	import CalendarTime from "../../shared/CalendarTime.svelte"
+	import NoEnoughCreditPopup from "./NoEnoughCreditPopup.svelte"
 
+	import { onMount } from "svelte"
 	import { empty } from "$lib/helper/utils"
     import { showModal } from "$lib/helper/modal"
     import { showPopup } from "$lib/helper/popup"
@@ -17,6 +19,23 @@
 
     let selectedTime = ""
     let selectedDate = ""
+    let enoughCredit = true
+
+    let totalPrice = 0
+    let messagePrice = empty($lastOrder?.pricelist?.price) ? 0 : $lastOrder.pricelist.price
+
+    onMount(() => {
+        if (empty($message.messageWithAttributes)) {
+            totalPrice = ($message.validNumbers.length * ($message.segments?.length ?? 1) * messagePrice).toFixed(2)
+        } else {
+            totalPrice = ($message.messageWithAttributes.reduce((sum, msg) => sum += msg.segments.length, 0) * messagePrice).toFixed(2)
+        }
+
+        if (totalPrice > $currentClient.balance) {
+            showPopup("no-credit")
+            enoughCredit = false
+        }
+    })
 
     const pushMessage = async () => {
         let result = null
@@ -161,7 +180,7 @@
                 </svg>
                 <span class="text-primary-600 font-medium">Total Cost</span>
             </div>
-            <span class="text-primary-600 font-semibold">{empty($message.validNumbers) || empty($lastOrder?.pricelist) ? "0.0" : ($message.validNumbers.length * $lastOrder.pricelist?.price * ($message.segments?.length ?? 1)).toFixed(2)} LE</span>
+            <span class="text-primary-600 font-semibold">{empty($message.validNumbers) || empty($lastOrder?.pricelist) ? "0.0" : totalPrice} LE</span>
             <div class="flex items-center gap-1 ps-2 pe-2.5 py-0.5 rounded-2xl bg-primary-50 mix-blend-multiply">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <g clip-path="url(#clip0_754_12590)">
@@ -236,7 +255,7 @@
             <button on:click={back} class="flex justify-center items-center gap-2 py-2.5 px-[18px] rounded-lg border border-gray-300 bg-white shadow-sm">
                 <span class="text-gray-700 font-semibold">Back</span>
             </button>
-            <button on:click={pushMessage} class="flex justify-center items-center gap-2 py-2.5 px-[18px] rounded-lg border border-primary-600 bg-primary-600 shadow-sm">
+            <button disabled={! enoughCredit} on:click={pushMessage} class="flex justify-center items-center gap-2 py-2.5 px-[18px] rounded-lg border border-primary-600 bg-primary-600 shadow-sm {enoughCredit ? "opacity-100" : "opacity-40"}">
                 <span class="text-white font-semibold">Push Message</span>
             </button>
         </div>
@@ -245,3 +264,4 @@
 
 <CalendarTime bind:selectedTime={selectedTime} onSelectTime={setDateTime} />
 <CalendarDate bind:selectedDate={selectedDate} onCancelCalendar={applyNow} onApplyCalendar={applyCalendar} />
+<NoEnoughCreditPopup />
